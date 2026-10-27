@@ -1,0 +1,13 @@
+{
+  "name": "uk-launch-desk",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Independent concept by Ayo Ahmed: a local, offline-friendly desk that turns a public signal into a reviewed UK account brief.",
+  "scripts": {
+    "test": "node --test \"tests/unit/*.test.js\"",
+    "test:browser": "node --test --test-concurrency=1 \"tests/browser/*.test.js\"",
+    "test:all": "npm test && npm run test:browser",
+    "serve": "node -e \"require('./tests/browser/server.js').start().then(({url})=>console.log('Desk running at '+url))\""
+  },
+  "engines": { "node": ">=20" }
+}
