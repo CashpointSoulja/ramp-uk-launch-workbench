@@ -1,0 +1,26 @@
+[
+  {
+    "file": "art-0.jpg",
+    "source_page": "https://ramp.com/en-gb/corporate-cards",
+    "source_url": "https://ramp.com/_next/image?url=https%3A%2F%2Fcdn.air.inc%2F152120ca-ac3c-4566-a7e6-678fab4858ee&w=1920&q=75",
+    "sha256": "95539c4da739bd449c48c38855f6b3c0f2a734535f50faae740b3ad1bd9e9fa6",
+    "captured": "2026-10-27",
+    "rights": "Ramp and its licensors retain rights. Reused solely for this independent, non-affiliated demonstration."
+  },
+  {
+    "file": "art-1.jpg",
+    "source_page": "https://ramp.com/en-gb/expense-management",
+    "source_url": "https://ramp.com/_next/image?url=https%3A%2F%2Fcdn.air.inc%2F07344560-a89f-45db-b578-10cb902e18d0&w=3840&q=75",
+    "sha256": "ca52d1a767cfd0dba2fd1f670182c6786292b45987bb8782d4947278fc1f22c8",
+    "captured": "2026-10-27",
+    "rights": "Ramp and its licensors retain rights. Reused solely for this independent, non-affiliated demonstration."
+  },
+  {
+    "file": "art-2.jpg",
+    "source_page": "https://ramp.com/en-gb",
+    "source_url": "https://ramp.com/_next/image?url=https%3A%2F%2Fcdn.air.inc%2Fad193983-a737-46e3-8a16-64b4c52e330f&w=1920&q=75",
+    "sha256": "db019601f821a10a8495b1fd9e21e989b1e3c8e227edb186a94b35d90caa0774",
+    "captured": "2026-10-27",
+    "rights": "Ramp and its licensors retain rights. Reused solely for this independent, non-affiliated demonstration."
+  }
+]
