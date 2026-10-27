@@ -6,6 +6,12 @@ A single local page that turns one public signal, such as a company-posted finan
 
 It works offline in a modern browser. It uses no AI, no scraping, no CRM, no tracking, no accounts and no paid service, and it never sends anything.
 
+## Live demo
+
+[Open the UK launch desk](https://ramp-uk-launch-desk.pages.dev/)
+
+No sign-in is needed. Data you enter stays in your own browser.
+
 ## What it does
 
 - **Researched example.** One record, Solve Intelligence, built from a company-posted job checked on 27 Oct 2026. It is an example, not a lead list.
