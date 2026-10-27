@@ -1,0 +1,815 @@
+<!DOCTYPE html>
+
+<html lang="en-GB"><head><meta charset="utf-8"/><meta content="width=device-width,initial-scale=1" name="viewport"/><title>UK launch desk</title>
+<meta content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'; frame-src 'none'" http-equiv="Content-Security-Policy"/>
+<meta content="Independent concept by Ayo Ahmed. A local desk that turns a public signal into a reviewed UK account brief. No CRM, no AI, nothing sends." name="description"/>
+<link href="data:," rel="icon"/>
+<style>
+html{scroll-behavior:auto!important} .hero .cand,.hero .srcchip{animation:none!important}
+
+:root{
+  color-scheme: light;
+  --ink:#1a1a1a;
+  --ink-2:#3d3c39;
+  --muted:#6c6a65;
+  --line:#dddbd5;
+  --line-2:#c9c6be;
+  --canvas:#ffffff;
+  --stage:#f1efea;
+  --stage-cool:#ecedee;
+  --solar:#e4f222;
+  --solar-press:#d3e016;
+  --code:#e8f1fc;
+  --code-line:#9cc0ec;
+  --flag:#8a3410;
+  --flag-bg:#fbefe7;
+  --ok:#2f5b24;
+  --font: "Lausanne", Arial, Helvetica, sans-serif;
+  --pad: clamp(20px, 5vw, 64px);
+  --max: 1312px;
+  --hdr: 64px;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%; scroll-padding-top:calc(var(--hdr) + 16px)}
+@media (prefers-reduced-motion:no-preference){html{scroll-behavior:smooth}}
+body{margin:0;background:var(--canvas);color:var(--ink);font-family:var(--font);font-size:16px;line-height:1.5;-webkit-font-smoothing:antialiased;padding-bottom:env(safe-area-inset-bottom,0px)}
+img,video{max-width:100%;display:block}
+a{color:inherit}
+button,input,select,textarea{font:inherit;color:inherit}
+.page{overflow-x:clip}
+.wrap{max-width:var(--max);margin:0 auto;padding-inline:var(--pad)}
+.skip{position:absolute;left:-999px;top:8px;background:var(--solar);padding:12px 16px;z-index:100;border-radius:6px}
+.skip:focus{left:12px}
+:focus-visible{outline:2px solid var(--ink);outline-offset:3px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* ---------- header ---------- */
+.hdr{position:sticky;top:0;z-index:40;background:rgba(255,255,255,.94);backdrop-filter:saturate(1.4) blur(10px);-webkit-backdrop-filter:saturate(1.4) blur(10px);border-bottom:1px solid transparent;padding-top:env(safe-area-inset-top,0px);transition:border-color .2s}
+.hdr.scrolled{border-bottom-color:var(--line)}
+.hdr-in{display:flex;align-items:center;gap:20px;min-height:var(--hdr)}
+.brand{display:flex;align-items:center;gap:14px;text-decoration:none;min-height:44px}
+.brand svg{color:var(--ink);flex:none}
+.brand-sep{width:1px;height:20px;background:var(--line-2)}
+.brand-name{font-size:15px;letter-spacing:-.01em;white-space:nowrap}
+.nav{display:flex;gap:4px;margin-left:auto}
+.nav a{display:flex;align-items:center;min-height:44px;padding:0 14px;border-radius:6px;font-size:15px;text-decoration:none;color:var(--ink-2)}
+.nav a:hover{background:var(--stage)}
+.nav a[aria-current="true"]{color:var(--ink);background:var(--stage)}
+.nav .n{color:var(--muted);margin-right:6px;font-variant-numeric:tabular-nums}
+@media (max-width:760px){
+  .hdr-in{flex-wrap:wrap;gap:0;padding-block:6px}
+  .nav{margin-left:0;width:100%;justify-content:space-between;border-top:1px solid var(--line);padding-top:4px}
+  .nav a{padding:0 8px;font-size:14px;flex:1;justify-content:center}
+  .nav .n{display:none}
+  html{scroll-padding-top:128px}
+}
+
+/* ---------- type ---------- */
+h1,h2,h3,h4{font-weight:500;margin:0;letter-spacing:-.025em;color:var(--ink)}
+.h1{font-size:64px;line-height:64px;letter-spacing:-.04em}
+.h2{font-size:48px;line-height:50px;letter-spacing:-.035em}
+.h3{font-size:26px;line-height:30px;letter-spacing:-.02em}
+.lede{font-size:19px;line-height:28px;color:var(--ink-2);max-width:34em;margin:20px 0 0}
+.body{color:var(--ink-2);max-width:36em}
+.small{font-size:13px;line-height:18px;color:var(--muted)}
+@media (max-width:760px){
+  .h1{font-size:40px;line-height:42px}
+  .h2{font-size:32px;line-height:35px}
+  .h3{font-size:22px;line-height:27px}
+  .lede{font-size:17px;line-height:25px}
+}
+.step-no{display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;border-radius:50%;border:1px solid var(--ink);font-size:14px;font-variant-numeric:tabular-nums;margin-bottom:20px}
+
+/* ---------- buttons ---------- */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:48px;padding:0 20px;border-radius:6px;border:1px solid var(--ink);background:var(--canvas);text-decoration:none;cursor:pointer;font-size:16px;line-height:1.2;text-align:center}
+.btn:hover{background:var(--stage)}
+.btn-solar{background:var(--solar);border-color:var(--solar)}
+.btn-solar:hover{background:var(--solar-press);border-color:var(--solar-press)}
+.btn-ink{background:var(--ink);color:#fff}
+.btn-ink:hover{background:#000}
+.btn[disabled]{background:#f1f1ef;border-color:var(--line);color:#8e8c86;cursor:not-allowed}
+.btn-sm{min-height:44px;padding:0 14px;font-size:15px}
+.link{display:inline-flex;align-items:center;min-height:44px;text-underline-offset:4px;text-decoration-thickness:1px}
+.link:hover{text-decoration-thickness:2px}
+
+/* ---------- stages / art ---------- */
+.dots{background-color:var(--stage);background-image:radial-gradient(rgba(26,26,26,.16) 1px, transparent 1.3px);background-size:18px 18px;background-position:9px 9px}
+.dots-cool{background-color:var(--stage-cool)}
+.art{position:relative;overflow:hidden;border-radius:4px}
+.art img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.art.failed img{display:none}
+.art-cap{position:absolute;left:14px;bottom:14px;right:14px;display:flex;justify-content:flex-start;pointer-events:none}
+.art-cap span{background:rgba(255,255,255,.9);border-radius:4px;padding:5px 9px;font-size:12px;line-height:16px;color:var(--ink-2);max-width:100%}
+.anchor{position:absolute;width:7px;height:7px;border-radius:50%;background:var(--ink)}
+
+/* ---------- markers ---------- */
+.mk{display:inline-flex;align-items:center;gap:7px;font-size:13px;line-height:18px;color:var(--ink-2);white-space:nowrap}
+.mk::before{content:"";width:9px;height:9px;border-radius:50%;flex:none;box-sizing:border-box}
+.mk-obs::before{background:var(--ink)}
+.mk-hyp::before{border:1.5px solid var(--ink)}
+.mk-unk::before{border:1.5px dashed var(--ink)}
+[data-kind]{transition:opacity .2s}
+body[data-lens="observed"] [data-kind]:not([data-kind="observed"]),
+body[data-lens="hypothesis"] [data-kind]:not([data-kind="hypothesis"]),
+body[data-lens="unknown"] [data-kind]:not([data-kind="unknown"]){opacity:.22}
+
+/* ---------- hero ---------- */
+.hero{padding:56px 0 112px}
+.hero-grid{display:grid;grid-template-columns:minmax(0,6fr) minmax(0,6fr);gap:56px;align-items:center}
+.hero .h1{text-wrap:balance;max-width:9.6em}
+.hero-art .art-cap{top:14px;bottom:auto}
+.hero-actions{display:flex;flex-wrap:wrap;gap:12px 20px;align-items:center;margin-top:32px}
+.hero-stage{position:relative}
+.hero-art{aspect-ratio:1/1}
+.cand{position:absolute;left:-44px;bottom:-64px;width:316px;background:#fff;border-radius:8px;box-shadow:0 1px 0 rgba(0,0,0,.04),0 12px 32px -12px rgba(26,26,26,.28);border:1px solid rgba(26,26,26,.08);padding:16px 16px 14px}
+.cand::before{content:"";position:absolute;left:28px;top:-52px;width:1px;height:52px;background:var(--ink)}
+.cand::after{content:"";position:absolute;left:25px;top:-56px;width:7px;height:7px;border-radius:50%;background:var(--ink)}
+.cand-top{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.cand h3{font-size:18px;line-height:22px;letter-spacing:-.015em;margin-top:10px}
+.cand p{margin:6px 0 0;font-size:14px;line-height:20px;color:var(--ink-2)}
+.cand-next{margin-top:14px;padding-top:12px;border-top:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;gap:12px}
+.cand-next b{font-weight:500;font-size:14px;line-height:19px;display:block}
+.srcchip{position:absolute;right:-20px;top:72px;background:#fff;border-radius:8px;border:1px solid rgba(26,26,26,.08);box-shadow:0 10px 28px -14px rgba(26,26,26,.3);padding:10px 12px 10px 14px;max-width:236px;font-size:13px;line-height:18px}
+.srcchip::before{content:"";position:absolute;right:100%;top:50%;width:44px;height:1px;background:var(--ink)}
+.srcchip::after{content:"";position:absolute;right:calc(100% + 41px);top:calc(50% - 3px);width:7px;height:7px;border-radius:50%;background:var(--ink)}
+.srcchip a{display:block;font-weight:500;color:var(--ink);text-decoration:none}
+.srcchip a:hover{text-decoration:underline}
+.pill{display:inline-flex;align-items:center;gap:6px;font-size:12px;line-height:16px;padding:4px 9px;border-radius:999px;background:var(--stage);color:var(--ink-2);white-space:nowrap}
+.pill-solar{background:var(--solar);color:var(--ink)}
+.pill-stop{background:var(--ink);color:#fff}
+.pill-hold{background:#fff;border:1px dashed var(--ink)}
+@media (max-width:1023px){
+  .hero{padding:32px 0 56px}
+  .hero-grid{grid-template-columns:1fr;gap:36px}
+  .hero-art{aspect-ratio:4/3}
+  .cand{position:relative;left:auto;bottom:auto;width:auto;margin:-56px 14px 0;z-index:2}
+  .cand::before{top:-30px;height:30px}
+  .cand::after{top:-34px}
+  .srcchip{right:auto;left:14px;top:14px;max-width:calc(100% - 28px)}
+  .srcchip::before,.srcchip::after{display:none}
+}
+@media (max-width:1023px){.srcchip{display:none}}
+@media (prefers-reduced-motion:no-preference){
+  .cand,.srcchip{animation:rise .7s cubic-bezier(.2,.7,.2,1) both}
+  .srcchip{animation-delay:.25s}
+  .cand{animation-delay:.45s}
+  @keyframes rise{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+}
+
+/* ---------- overview ---------- */
+.overview{padding:88px 0 96px}
+.ov-head{display:grid;grid-template-columns:minmax(0,7fr) minmax(0,5fr);gap:48px;align-items:start}
+.next{background:#fff;border-radius:8px;border:1px solid rgba(26,26,26,.08);box-shadow:0 14px 36px -18px rgba(26,26,26,.28);padding:22px}
+.next-label{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.next h3{font-size:22px;line-height:27px;margin-top:14px}
+.next p{margin:8px 0 0;color:var(--ink-2);font-size:15px;line-height:22px}
+.seg{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;margin-top:16px;border:0;padding:0}
+.seg legend{font-size:13px;color:var(--muted);margin-bottom:8px;padding:0}
+.seg label{position:relative;display:flex;align-items:center;justify-content:center;text-align:center;min-height:48px;padding:6px 8px;border:1px solid var(--line-2);border-radius:6px;font-size:14px;line-height:17px;cursor:pointer;background:#fff}
+.seg input{position:absolute;opacity:0;inset:0;margin:0;cursor:pointer}
+.seg label:has(input:checked){background:var(--ink);color:#fff;border-color:var(--ink)}
+.seg label:has(input:focus-visible){outline:2px solid var(--ink);outline-offset:2px}
+.next-go{margin-top:16px;display:flex;gap:12px;flex-wrap:wrap}
+
+.flow{position:relative;margin-top:56px;display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:14px;list-style:none;padding:0}
+.flow::before{content:"";position:absolute;left:24px;right:24px;top:24px;height:1px;background:var(--ink);opacity:.7}
+.flow li{position:relative}
+.node{display:block;width:100%;text-align:left;background:none;border:0;padding:0;cursor:pointer;text-decoration:none;color:inherit}
+.node-dot{position:relative;z-index:1;width:48px;height:48px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:var(--stage);font-size:14px;font-variant-numeric:tabular-nums}
+.node-dot i{width:14px;height:14px;border-radius:50%;border:1.5px solid var(--ink);background:var(--stage)}
+.node[data-st="done"] .node-dot i{background:var(--ink)}
+.node[data-st="now"] .node-dot i{width:22px;height:22px;background:var(--solar);border-color:var(--ink)}
+.node[data-st="stop"] .node-dot i{background:#fff;border-style:dashed}
+.node-card{display:block;margin-top:14px;background:#fff;border-radius:8px;border:1px solid rgba(26,26,26,.08);padding:14px;min-height:118px;transition:box-shadow .2s, transform .2s}
+.node:hover .node-card{box-shadow:0 10px 24px -14px rgba(26,26,26,.35)}
+.node[data-st="now"] .node-card{border-color:var(--ink)}
+.node-card .t{display:block;font-weight:500;font-size:15px;line-height:19px;letter-spacing:-.01em}
+.node-card .d{display:block;margin-top:6px;font-size:13px;line-height:18px;color:var(--ink-2)}
+.node-card .s{display:block;margin-top:10px;font-size:12px;line-height:16px;color:var(--muted)}
+.facts{margin:40px 0 0;display:flex;flex-wrap:wrap;gap:10px 28px;padding:0}
+.facts div{display:flex;gap:8px;align-items:baseline;font-size:14px;line-height:20px;color:var(--ink-2)}
+.facts dt{font-weight:500;color:var(--ink)}
+.facts dd{margin:0}
+@media (max-width:1023px){
+  .overview{padding:56px 0 64px}
+  .ov-head{grid-template-columns:1fr;gap:28px}
+  .flow{grid-template-columns:1fr;gap:0;margin-top:40px}
+  .flow::before{left:24px;right:auto;top:24px;bottom:24px;width:1px;height:auto}
+  .flow li{padding-bottom:12px}
+  .node{display:grid;grid-template-columns:48px minmax(0,1fr);gap:14px;align-items:start}
+  .node-card{margin-top:0;min-height:0}
+}
+@media (max-width:380px){.seg{grid-template-columns:1fr}}
+
+/* ---------- section heads ---------- */
+.sec{padding:112px 0}
+.sec-head{display:grid;grid-template-columns:minmax(0,6fr) minmax(0,6fr);gap:48px;align-items:end;margin-bottom:48px}
+.sec-head .body{margin:0}
+@media (max-width:1023px){.sec{padding:64px 0}.sec-head{grid-template-columns:1fr;gap:16px;margin-bottom:32px}}
+
+.lens{display:flex;flex-wrap:wrap;gap:6px;border:0;padding:0;margin:0}
+.lens legend{font-size:13px;color:var(--muted);margin-bottom:8px;padding:0;width:100%}
+.lens label{position:relative;display:inline-flex;align-items:center;min-height:44px;padding:0 14px;border-radius:999px;border:1px solid var(--line-2);background:#fff;cursor:pointer;font-size:14px}
+.lens input{position:absolute;opacity:0;inset:0;margin:0;cursor:pointer}
+.lens label:has(input:checked){border-color:var(--ink);box-shadow:inset 0 0 0 1px var(--ink)}
+.lens label:has(input:focus-visible){outline:2px solid var(--ink);outline-offset:2px}
+.lens .mk{pointer-events:none}
+
+/* ---------- signals ---------- */
+.sig-grid{display:grid;grid-template-columns:minmax(0,4fr) minmax(0,8fr);gap:56px;align-items:start}
+.sig-side{display:flex;flex-direction:column;gap:28px}
+.sig-stage{position:relative;padding:56px 48px;border-radius:4px;display:grid;grid-template-columns:minmax(0,7fr) minmax(0,5fr);gap:40px;align-items:start}
+.paper{position:relative;background:#fff;border-radius:3px;box-shadow:0 1px 0 rgba(0,0,0,.05),0 22px 44px -22px rgba(26,26,26,.38);padding:22px 22px 18px}
+.paper::before{content:"";position:absolute;left:0;right:0;top:-6px;height:6px;background:radial-gradient(circle at 6px 6px, transparent 4px, #fff 4.5px) 0 0/12px 12px repeat-x}
+.paper-top{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.paper h3{font-size:24px;line-height:28px;letter-spacing:-.025em;margin-top:16px}
+.paper .meta{margin:6px 0 0;font-size:14px;color:var(--ink-2)}
+.lines{list-style:none;margin:18px 0 0;padding:0;border-top:1px dashed var(--line-2)}
+.lines li{display:grid;grid-template-columns:12px minmax(0,1fr);gap:12px;padding:11px 0;border-bottom:1px dashed var(--line-2);font-size:15px;line-height:21px}
+.lines li::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--ink);margin-top:6px}
+.paper-foot{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-top:12px}
+.float-col{display:flex;flex-direction:column;gap:22px;padding-top:44px}
+.fcard{position:relative;background:#fff;border-radius:8px;border:1px solid rgba(26,26,26,.08);box-shadow:0 12px 30px -18px rgba(26,26,26,.35);padding:16px}
+.fcard p{margin:10px 0 0;font-size:15px;line-height:21px}
+.fcard ul{margin:10px 0 0;padding:0;list-style:none}
+.fcard li{font-size:14px;line-height:19px;padding:7px 0;border-top:1px solid var(--line)}
+.fcard li:first-child{border-top:0}
+.fcard.link-left::before{content:"";position:absolute;right:100%;top:30px;width:40px;height:1px;background:var(--ink)}
+.fcard.link-left::after{content:"";position:absolute;right:calc(100% + 37px);top:27px;width:7px;height:7px;border-radius:50%;background:var(--ink)}
+.audit{border-top:1px solid var(--line);padding-top:4px}
+.audit summary{list-style:none;cursor:pointer;min-height:48px;display:flex;align-items:center;justify-content:space-between;gap:12px;font-weight:500}
+.audit summary::-webkit-details-marker{display:none}
+.audit summary .plus{width:22px;height:22px;border-radius:50%;border:1px solid var(--ink);position:relative;flex:none}
+.audit summary .plus::before,.audit summary .plus::after{content:"";position:absolute;left:50%;top:50%;width:10px;height:1px;background:var(--ink);transform:translate(-50%,-50%)}
+.audit summary .plus::after{transform:translate(-50%,-50%) rotate(90deg);transition:transform .2s}
+.audit[open] summary .plus::after{transform:translate(-50%,-50%) rotate(0)}
+.audit table{width:100%;border-collapse:collapse;font-size:14px;line-height:19px;margin:4px 0 8px}
+.audit th{font-weight:500;text-align:left;color:var(--muted);font-size:12px;padding:6px 8px 6px 0;border-bottom:1px solid var(--line)}
+.audit td{padding:9px 8px 9px 0;border-bottom:1px solid var(--line);vertical-align:top}
+.audit td a{text-underline-offset:3px}
+@media (max-width:1180px){.sig-stage{grid-template-columns:1fr;padding:40px 28px}.float-col{padding-top:0}.fcard.link-left::before,.fcard.link-left::after{display:none}}
+@media (max-width:1023px){.sig-grid{grid-template-columns:1fr;gap:32px}}
+@media (max-width:520px){.sig-stage{padding:28px 14px;margin-inline:calc(var(--pad) * -1);border-radius:0}.paper{padding:18px 16px 14px}}
+
+/* ---------- brief ---------- */
+.brief-sec{padding-top:112px}
+.band{height:clamp(260px,34vw,500px)}
+.band.art{border-radius:0}
+.band-cap{top:16px;bottom:auto;left:max(var(--pad), calc((100vw - var(--max)) / 2 + var(--pad)))}
+.brief-grid{display:grid;grid-template-columns:minmax(0,8fr) minmax(0,4fr);gap:28px;margin-top:-140px;position:relative;z-index:2;align-items:start}
+.panel{background:#fff;border-radius:8px;border:1px solid rgba(26,26,26,.1);box-shadow:0 24px 60px -30px rgba(26,26,26,.4)}
+.panel-head{padding:24px 28px 0;display:flex;justify-content:space-between;gap:16px 24px;flex-wrap:wrap;align-items:flex-start}
+.panel-head .chips{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}
+.tabs{display:flex;flex-wrap:wrap;gap:2px;padding:20px 22px 0;border-bottom:1px solid var(--line)}
+.tab{min-height:48px;padding:0 14px;border:0;background:none;cursor:pointer;font-size:15px;color:var(--muted);border-bottom:2px solid transparent;margin-bottom:-1px}
+.tab[aria-selected="true"]{color:var(--ink);border-bottom-color:var(--ink)}
+.tab:hover{color:var(--ink)}
+.tabpanel{padding:26px 28px 30px}
+.tabpanel[hidden]{display:none}
+.tabpanel h4{font-size:17px;line-height:22px;letter-spacing:-.01em}
+.tabpanel .intro{margin:0 0 18px;color:var(--ink-2);max-width:40em}
+.ev{list-style:none;margin:0;padding:0}
+.ev li{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:6px 16px;padding:14px 0;border-top:1px solid var(--line);align-items:baseline}
+.ev li:last-child{border-bottom:1px solid var(--line)}
+.ev .src{grid-column:1/-1;font-size:13px;color:var(--muted)}
+.ev .src a{text-underline-offset:3px}
+.hyp{border-radius:6px;padding:20px;border:1.5px solid var(--ink);max-width:44em}
+.hyp p{font-size:20px;line-height:27px;letter-spacing:-.015em;margin:12px 0 0}
+.two{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:28px;margin-top:26px}
+.two ul{margin:10px 0 0;padding:0;list-style:none}
+.two li{padding:9px 0;border-top:1px solid var(--line);font-size:15px;line-height:21px;color:var(--ink-2)}
+.qs{list-style:none;margin:0;padding:0;counter-reset:q}
+.qs li{border-top:1px solid var(--line)}
+.qs li:last-child{border-bottom:1px solid var(--line)}
+.qs label{display:grid;grid-template-columns:28px minmax(0,1fr) auto;gap:12px;align-items:start;padding:14px 0;cursor:pointer;min-height:48px}
+.qs label::before{counter-increment:q;content:counter(q);font-size:13px;color:var(--muted);font-variant-numeric:tabular-nums;padding-top:2px}
+.qs .qt{font-size:16px;line-height:22px}
+.qs .why{display:block;font-size:13px;line-height:18px;color:var(--muted);margin-top:4px}
+.box{appearance:none;-webkit-appearance:none;width:24px;height:24px;margin:0;border:1.5px solid var(--ink);border-radius:5px;background:#fff;cursor:pointer;flex:none;position:relative;display:grid;place-items:center}
+.box:checked{background:var(--ink)}
+.box:checked::after{content:"";width:10px;height:5px;border-left:2px solid #fff;border-bottom:2px solid #fff;transform:translateY(-1px) rotate(-45deg)}
+.box:disabled{opacity:.4;cursor:not-allowed}
+.qs .inc{font-size:12px;color:var(--muted);display:flex;align-items:center;gap:8px;white-space:nowrap}
+.fit{display:grid;grid-template-columns:minmax(0,7fr) minmax(0,5fr);gap:28px}
+.fit ul{list-style:none;margin:12px 0 0;padding:0}
+.fit li{padding:12px 0;border-top:1px solid var(--line);font-size:15px;line-height:21px}
+.fit li a{font-size:13px;color:var(--muted);text-underline-offset:3px;display:inline-block;margin-top:2px}
+.careful{background:var(--stage);border-radius:6px;padding:18px}
+.careful li{border-top-color:var(--line-2)}
+.draft-bar{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:14px;margin-bottom:14px}
+.role{display:flex;gap:6px;border:0;padding:0;margin:0;flex-wrap:wrap}
+.role legend{font-size:13px;color:var(--muted);padding:0;margin-bottom:8px}
+.role label{position:relative;display:inline-flex;align-items:center;min-height:44px;padding:0 14px;border-radius:6px;border:1px solid var(--line-2);cursor:pointer;font-size:14px;background:#fff}
+.role input{position:absolute;inset:0;opacity:0;margin:0;cursor:pointer}
+.role label:has(input:checked){background:var(--ink);color:#fff;border-color:var(--ink)}
+.role label:has(input:focus-visible){outline:2px solid var(--ink);outline-offset:2px}
+.sample-note{display:flex;gap:10px;align-items:flex-start;font-size:13px;line-height:18px;color:var(--ink-2);padding:10px 12px;border-radius:6px;background:var(--stage);margin-bottom:12px}
+.sample-note::before{content:"";width:9px;height:9px;border-radius:50%;border:1.5px solid var(--ink);flex:none;margin-top:4px}
+textarea.code{width:100%;min-height:360px;resize:vertical;border:1px solid var(--code-line);background:var(--code);border-radius:6px;padding:16px 18px;font-size:15px;line-height:23px;color:var(--ink)}
+textarea.code:focus{outline:2px solid var(--ink);outline-offset:2px}
+.draft-foot{display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px 16px;margin-top:10px}
+.checks{list-style:none;margin:18px 0 0;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 24px}
+.checks li{display:grid;grid-template-columns:20px minmax(0,1fr);gap:10px;padding:10px 0;border-top:1px solid var(--line);font-size:14px;line-height:19px}
+.checks .ic{width:18px;height:18px;border-radius:50%;display:grid;place-items:center;font-size:11px;margin-top:1px}
+.checks .pass .ic{background:var(--stage);color:var(--ok)}
+.checks .pass .ic::after{content:"";width:7px;height:4px;border-left:1.5px solid currentColor;border-bottom:1.5px solid currentColor;transform:translateY(-1px) rotate(-45deg)}
+.checks .flag .ic{background:var(--flag-bg);color:var(--flag);font-weight:700}
+.checks .flag .ic::after{content:"!"}
+.checks .flag .ct{color:var(--flag)}
+.checks .hit{display:block;font-size:12px;color:var(--muted);margin-top:2px;overflow-wrap:anywhere}
+
+.rail{position:sticky;top:calc(var(--hdr) + 20px);display:flex;flex-direction:column;gap:16px}
+.review{padding:22px}
+.review h3{font-size:20px;line-height:25px}
+.review ul{list-style:none;margin:14px 0 0;padding:0}
+.review li label{display:grid;grid-template-columns:24px minmax(0,1fr);gap:12px;align-items:start;padding:12px 0;border-top:1px solid var(--line);font-size:14px;line-height:20px;cursor:pointer;min-height:48px}
+.meter{height:4px;border-radius:4px;background:var(--stage);margin-top:14px;overflow:hidden}
+.meter i{display:block;height:100%;width:0;background:var(--ink);transition:width .3s}
+.review .acts{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:16px}
+.review .acts .btn{padding:0 10px}
+.stopnote{margin-top:12px;font-size:13px;line-height:18px;color:var(--ink-2)}
+.nosend{display:flex;gap:10px;align-items:center;font-size:13px;line-height:18px;color:var(--ink-2);padding:14px 16px}
+.nosend svg{flex:none}
+@media (max-width:1023px){
+  .brief-sec{padding-top:64px}
+  .brief-grid{grid-template-columns:1fr;margin-top:-72px}
+  .rail{position:static}
+  .two,.fit{grid-template-columns:1fr}
+}
+@media (max-width:640px){
+  .panel-head{padding:20px 16px 0}
+  .tabs{padding:14px 8px 0}
+  .tab{padding:0 10px;font-size:14px}
+  .tabpanel{padding:20px 16px 24px}
+  .checks{grid-template-columns:1fr}
+  .hyp p{font-size:18px;line-height:25px}
+  .brief-grid{margin-top:-48px}
+  textarea.code{min-height:420px;padding:14px;font-size:15px}
+}
+
+/* ---------- feedback ---------- */
+.fb-tools{display:flex;flex-wrap:wrap;gap:12px;align-items:flex-end;justify-content:space-between;margin-bottom:24px}
+.fb-tools .left{display:flex;gap:12px;flex-wrap:wrap;align-items:flex-end}
+.field{display:flex;flex-direction:column;gap:6px;min-width:0}
+.field > span{font-size:13px;color:var(--muted)}
+select,input[type="text"],textarea.plain{min-height:44px;border:1px solid var(--line-2);border-radius:6px;background:#fff;padding:8px 12px;font-size:15px;max-width:100%}
+select{padding-right:34px;appearance:none;-webkit-appearance:none;background-image:linear-gradient(45deg,transparent 50%,var(--ink) 50%),linear-gradient(135deg,var(--ink) 50%,transparent 50%);background-position:calc(100% - 17px) 50%,calc(100% - 12px) 50%;background-size:5px 5px;background-repeat:no-repeat}
+input[type="text"]:focus,textarea.plain:focus,select:focus{outline:2px solid var(--ink);outline-offset:1px;border-color:var(--ink)}
+.mosaic{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:20px;align-items:start}
+.fb-art{position:sticky;top:calc(var(--hdr) + 20px)}
+.fb-art .art{aspect-ratio:4/5}
+.fb-cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.fb{background:#fff;border-radius:8px;border:1px solid rgba(26,26,26,.1);padding:18px;display:flex;flex-direction:column;gap:12px}
+.fb.lead{grid-column:1/-1;border-color:var(--ink)}
+.fb-top{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}
+.fb h3{font-size:18px;line-height:23px;letter-spacing:-.015em}
+.fb.lead h3{font-size:22px;line-height:27px}
+.fb .q-lbl{font-size:12px;color:var(--muted)}
+.fb .q{margin:3px 0 0;font-size:15px;line-height:21px;color:var(--ink)}
+.fb dl{display:grid;grid-template-columns:auto minmax(0,1fr);gap:6px 14px;margin:0;font-size:13px;line-height:18px}
+.fb dt{color:var(--muted)}
+.fb dd{margin:0;color:var(--ink-2)}
+.fb .disp{margin-top:auto;padding-top:12px;border-top:1px solid var(--line)}
+.fb .disp select{width:100%}
+.fb .origin{font-size:12px;color:var(--muted);display:flex;align-items:center;gap:7px}
+.fb .origin::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--ink)}
+.addform{background:var(--stage);border-radius:8px;padding:20px;margin-bottom:20px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.addform[hidden]{display:none}
+.addform .full{grid-column:1/-1}
+.addform textarea.plain{min-height:88px;resize:vertical;width:100%}
+.addform input[type="text"],.addform select{width:100%}
+.addform .acts{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.empty{grid-column:1/-1;padding:28px;border:1px dashed var(--line-2);border-radius:8px;color:var(--ink-2)}
+@media (max-width:1023px){.mosaic{grid-template-columns:1fr}.fb-art{position:static}.fb-art .art{aspect-ratio:16/10}}
+@media (max-width:640px){.fb-cards{grid-template-columns:1fr}.addform{grid-template-columns:1fr}.fb-tools .left{width:100%}.fb-tools .left .field{flex:1}.fb-tools .left select{width:100%}}
+
+/* ---------- footer ---------- */
+.foot{border-top:1px solid var(--line);padding:56px 0 64px;margin-top:40px}
+.foot-grid{display:grid;grid-template-columns:minmax(0,7fr) minmax(0,5fr);gap:40px}
+.foot h2{font-size:20px;line-height:25px}
+.foot ol{margin:14px 0 0;padding-left:20px;color:var(--ink-2);font-size:14px;line-height:20px}
+.foot ol li{padding:5px 0}
+.foot ol a{overflow-wrap:anywhere;text-underline-offset:3px}
+.foot .notes p{margin:14px 0 0;font-size:14px;line-height:20px;color:var(--ink-2)}
+.signoff{margin-top:40px;font-size:12px;color:var(--muted)}
+@media (max-width:860px){.foot-grid{grid-template-columns:1fr}}
+
+.toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translate(-50%,20px);background:var(--ink);color:#fff;padding:12px 16px;border-radius:8px;font-size:14px;line-height:19px;max-width:calc(100vw - 32px);opacity:0;pointer-events:none;transition:opacity .2s, transform .2s;z-index:60}
+.toast.on{opacity:1;transform:translate(-50%,0)}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
+.band.art{background:#f4f3f0}.band.art img{object-fit:contain}.hero .cand,.hero .srcchip{opacity:1!important}
+</style>
+<style id="desk-additions">
+/* Additions for implemented controls. The approved stylesheet above is unchanged apart from removed motion rules. */
+main:focus{outline:none}
+.btn[hidden]{display:none}
+.desk-records{display:flex;flex-direction:column;gap:12px}
+.desk-records select{width:100%}
+.rec-acts{display:flex;gap:8px;flex-wrap:wrap}
+.intake{margin-top:40px;margin-bottom:0}
+.intake .full p{margin:6px 0 0;max-width:46em}
+.intake input[type="text"]{width:100%}
+.field > .err{color:var(--flag)}
+.field > .err:empty{display:none}
+[aria-invalid="true"]{border-color:var(--flag)!important}
+.data-acts{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.data-msg p{margin:12px 0 0}
+.data-errors{margin:6px 0 0;padding-left:18px;color:var(--flag)}
+.data-errors li{padding:2px 0}
+</style>
+</head>
+<body data-lens="all">
+<a class="skip" href="#main">Skip to the desk</a>
+<header class="hdr" id="top">
+<div class="wrap hdr-in">
+<a class="brand" href="#top">
+<svg xmlns="http://www.w3.org/2000/svg" width="75" height="20" fill="none" viewBox="0 0 71 20" aria-label="Go to homepage"><g fill="currentColor" clip-path="url(#a)"><path d="M5.098 6.736c-1.768 0-2.636 1.57-2.636 3.669v5.256H-.032V4.568h2.45v2.878h.042c.524-1.77 1.565-3.2 3.174-3.2 1.132 0 1.607.399 1.607.399L6.116 6.93s-.358-.194-1.018-.194M35.237 8.26v7.401h-2.428v-6.5c0-1.865-.58-2.853-2.064-2.853s-2.28 1.251-2.28 3.647v5.706h-2.407v-6.5c0-1.794-.574-2.853-2.043-2.853-1.676 0-2.321 1.48-2.321 3.647v5.706h-2.45V4.568h2.45V7.08h.022c.38-1.737 1.424-2.811 3.182-2.811s2.878.943 3.31 2.62c.41-1.613 1.504-2.62 3.182-2.62 2.341 0 3.847 1.479 3.847 3.99M12.141 4.249c-2.255 0-3.728 1.067-4.4 2.993l2.074.762c.378-1.162 1.167-1.823 2.37-1.823 1.355 0 2.149.602 2.149 1.523 0 .922-.633 1.14-2.064 1.374-1.59.258-5.375.344-5.375 3.56 0 1.886 1.562 3.304 3.911 3.304 1.765 0 2.97-.728 3.526-2.082h.022v1.804h2.428V8.842c0-2.986-1.491-4.59-4.643-4.59zm2.257 6.19c0 2.328-1.142 3.822-2.966 3.822-1.29 0-2.065-.73-2.065-1.782 0-.988.796-1.671 2.322-1.954 1.56-.29 2.346-.646 2.707-1.501v1.418zm29.48-6.17c-1.857 0-3.086 1.03-3.61 2.575V4.568h-2.579V19.93h2.557v-6.547h.022c.569 1.676 1.755 2.598 3.61 2.598 2.944 0 5.05-2.445 5.05-5.9 0-3.431-2.106-5.812-5.05-5.812m-.636 9.655c-2.04 0-3.17-1.492-3.17-3.81 0-2.316 1.267-3.808 3.17-3.808s3.17 1.563 3.17 3.809-1.266 3.809-3.17 3.809M70.028 15.612v.07h-9.983v-.07c1.439-.82 2.432-1.654 3.327-2.526h4.1zm-2.473-13.11L65.027 0h-.074s.042 4.664-4.205 8.906c-4.156 4.15-9.046 4.16-9.046 4.16v.074l2.578 2.546s4.819.05 9.074-4.16c4.24-4.195 4.205-9.022 4.205-9.022z"></path></g><defs><clipPath id="a"><path fill="#fff" d="M0 0h70.06v20H0z"></path></clipPath></defs></svg>
+<span aria-hidden="true" class="brand-sep"></span>
+<span class="brand-name">UK launch desk</span>
+</a>
+<nav aria-label="Desk sections" class="nav">
+<a data-sec="overview" href="#overview">Overview</a>
+<a data-sec="signals" href="#signals"><span class="n">1</span>Signals</a>
+<a data-sec="brief" href="#brief"><span class="n">2</span>Brief</a>
+<a data-sec="feedback" href="#feedback"><span class="n">3</span>Feedback</a>
+</nav>
+</div>
+</header>
+<div class="page"><p style="margin:0;padding:8px 20px;font-size:12px;color:#737373;text-align:center">Independent concept by Ayo Ahmed</p>
+<main id="main" tabindex="-1">
+<!-- ================= HERO ================= -->
+<section aria-labelledby="hero-h" class="hero">
+<div class="wrap hero-grid">
+<div>
+<h1 class="h1" id="hero-h">Public signal in. Reviewed brief out.</h1>
+<p class="lede">A working desk for Ramp’s UK expansion. You enter public signs that a company is setting up or rebuilding its finance stack; the desk turns them into a source‑backed account brief from a fixed template, holds every draft for a person to review, and logs what the field learns for product and targeting.</p>
+<div class="hero-actions">
+<a class="btn btn-solar" data-bind="openBrief" href="#brief">Open the Solve Intelligence brief</a>
+<a class="link" href="#overview">See today’s next action</a>
+</div>
+</div>
+<div class="hero-stage">
+<div class="art hero-art dots" data-art="">
+<img alt="A card for every way teams spend." fetchpriority="high" src="art-0.jpg"/>
+<div class="art-cap"><span>Ramp UK corporate cards, product art from ramp.com/en-gb/corporate-cards</span></div>
+</div>
+<div class="srcchip">
+<span class="mk mk-obs">Public signal</span>
+<a data-bind="srcLink" href="https://www.ycombinator.com/companies/solve-intelligence/jobs/ajtyl6e-financial-operations-lead" rel="noopener noreferrer" target="_blank">Company-posted job: Financial Operations Lead</a>
+<span class="small" data-bind="srcMeta">ycombinator.com, checked 27 Oct 2026</span>
+</div>
+<article aria-label="Research candidate" class="cand">
+<div class="cand-top">
+<span class="small" data-bind="candKind">Researched example</span>
+<span class="pill" data-bind="crmPill">CRM check needed</span>
+</div>
+<h3 data-bind="candName">Solve Intelligence</h3>
+<p data-bind="candSummary">Hiring its first dedicated finance lead in London to build approvals, procurement, spend and AP from scratch.</p>
+<div class="cand-next">
+<div><span class="small">Next action</span><b data-bind="nextShort">Check customer status in CRM</b></div>
+<a class="btn btn-ink btn-sm" href="#next">Do it</a>
+</div>
+</article>
+</div>
+</div>
+</section>
+<!-- ================= OVERVIEW ================= -->
+<section aria-labelledby="ov-h" class="overview dots" data-section="" id="overview">
+<div class="wrap">
+<div class="ov-head">
+<div>
+<h2 class="h2" id="ov-h">One candidate on the desk, from signal to feedback.</h2>
+<p class="lede">Each step keeps what we saw separate from what we think and what we still don’t know. Select a step to open it.</p>
+<div aria-label="Key" style="display:flex;gap:18px;flex-wrap:wrap;margin-top:20px">
+<span class="mk mk-obs">Observed in a source</span>
+<span class="mk mk-hyp">Hypothesis</span>
+<span class="mk mk-unk">Unknown</span>
+</div>
+</div>
+<article aria-labelledby="next-h" class="next" id="next" tabindex="-1">
+<div class="next-label"><span class="small">Next action</span><span class="pill" data-bind="crmPill2">CRM check needed</span></div>
+<h3 data-bind="nextTitle" id="next-h">Check Solve Intelligence in the CRM</h3>
+<p data-bind="nextBody">No CRM is connected to this desk. Look the company up yourself, then record what you found. Outreach stays locked until you do.</p>
+<fieldset class="seg" id="crm">
+<legend>Customer status, from your own CRM check</legend>
+<label><input name="crm" type="radio" value="no"/>Not a customer</label>
+<label><input name="crm" type="radio" value="yes"/>Existing customer</label>
+<label><input name="crm" type="radio" value="unsure"/>Couldn’t confirm</label>
+</fieldset>
+<div class="next-go" data-bind="nextGo"></div>
+</article>
+</div>
+<ol aria-label="Signal to feedback, for Solve Intelligence" class="flow">
+<li><a class="node" data-node="1" data-st="done" href="#signals"><span class="node-dot"><i></i></span><span class="node-card"><span class="t">Public signal</span><span class="d" data-bind="n1d">Company-posted job for a first finance hire in London</span><span class="s">Logged</span></span></a></li>
+<li><a class="node" data-node="2" data-st="done" href="#signals"><span class="node-dot"><i></i></span><span class="node-card"><span class="t">Observed facts</span><span class="d" data-bind="n2d">Six lines taken from the source, nothing added</span><span class="s">Logged</span></span></a></li>
+<li><a class="node" data-node="3" data-st="done" data-tab-target="why" href="#brief"><span class="node-dot"><i></i></span><span class="node-card"><span class="t">Why-now hypothesis</span><span class="d" data-bind="n3d">Approvals, AP and connected accounting</span><span class="s">Written, not confirmed</span></span></a></li>
+<li><a class="node" data-node="4" data-st="done" data-tab-target="draft" href="#brief"><span class="node-dot"><i></i></span><span class="node-card"><span class="t">Brief and sample draft</span><span class="d">Questions, UK fit and a role-only draft</span><span class="s">Ready for review</span></span></a></li>
+<li><a class="node" data-node="5" data-st="now" href="#review"><span class="node-dot"><i></i></span><span class="node-card"><span class="t">Human review</span><span class="d">CRM status, claims and personal data</span><span class="s" data-bind="n5">0 of 5 checks</span></span></a></li>
+<li><a class="node" data-node="6" data-st="wait" href="#feedback"><span class="node-dot"><i></i></span><span class="node-card"><span class="t">Feedback to product</span><span class="d">Questions for product, positioning and targeting</span><span class="s" data-bind="n6">4 sample items</span></span></a></li>
+</ol>
+<dl class="facts">
+<div><dt data-bind="recCount">1</dt><dd data-bind="recCountLabel">research candidate</dd></div>
+<div><dt>2</dt><dd>companies screened out as known Ramp customers</dd></div>
+<div><dt>27 Oct 2026</dt><dd>example sources last checked</dd></div>
+<div><dt>No CRM</dt><dd>connected, and nothing sends from here</dd></div>
+</dl>
+</div>
+</section>
+<!-- ================= 1 SIGNALS ================= -->
+<section aria-labelledby="sig-h" class="sec" data-section="" id="signals">
+<div class="wrap">
+<div class="sig-grid">
+<div class="sig-side">
+<div>
+<span aria-hidden="true" class="step-no">1</span>
+<h2 class="h2" id="sig-h">Signals: what changed, in public.</h2>
+<p class="body" style="margin-top:16px">We look for company-posted evidence that a UK finance function is being set up or rebuilt. The researched example is a first dedicated finance hire, asked to choose the tools. Add your own public signal to build a brief the same way.</p>
+</div>
+<div class="desk-records">
+<label class="field"><span>On the desk</span><select id="recordSel"></select></label>
+<div class="rec-acts">
+<button aria-controls="intake" aria-expanded="false" class="btn btn-sm" id="intakeToggle" type="button">Add a public signal</button>
+<button class="btn btn-sm" hidden="" id="editRecord" type="button">Edit this signal</button>
+<button class="btn btn-sm" hidden="" id="removeRecord" type="button">Remove</button>
+</div>
+</div>
+<fieldset class="lens" data-lens-group="">
+<legend>Show</legend>
+<label><input checked="" name="lens1" type="radio" value="all"/>Everything</label>
+<label><input name="lens1" type="radio" value="observed"/><span class="mk mk-obs">Observed</span></label>
+<label><input name="lens1" type="radio" value="hypothesis"/><span class="mk mk-hyp">Hypothesis</span></label>
+<label><input name="lens1" type="radio" value="unknown"/><span class="mk mk-unk">Unknown</span></label>
+</fieldset>
+<div><button class="btn btn-solar" id="toBrief" type="button">Build the brief from this signal</button></div>
+<details class="audit">
+<summary>Screened out before research <span aria-hidden="true" class="plus"></span></summary>
+<p class="small" style="margin:0 0 6px">Known Ramp customers never become prospect tiles. Names appear here as text only, for audit.</p>
+<table>
+<thead><tr><th scope="col">Company</th><th scope="col">Why excluded</th><th scope="col">Where we saw it</th></tr></thead>
+<tbody>
+<tr><td>Fyxer</td><td>Known Ramp customer</td><td><a href="https://ramp.com/blog/uk-launch" rel="noopener noreferrer" target="_blank">UK launch post</a></td></tr>
+<tr><td>ElevenLabs</td><td>Known Ramp customer</td><td><a href="https://ramp.com/blog/uk-launch" rel="noopener noreferrer" target="_blank">Customer story linked from the UK launch post</a></td></tr>
+</tbody>
+</table>
+</details>
+</div>
+<div class="sig-stage dots">
+<article aria-labelledby="paper-h" class="paper" data-kind="observed">
+<div class="paper-top">
+<span class="mk mk-obs" data-bind="paperKind">Company-posted job</span>
+<span class="small" data-bind="paperChecked">Checked 27 Oct 2026</span>
+</div>
+<h3 id="paper-h" tabindex="-1">Financial Operations Lead</h3>
+<p class="meta" data-bind="paperMeta">Solve Intelligence, London</p>
+<ul class="lines" id="paperLines"></ul>
+<div class="paper-foot">
+<span class="small" data-bind="paperFoot">Paraphrased from the posting</span>
+<a class="link" data-bind="paperSrc" href="https://www.ycombinator.com/companies/solve-intelligence/jobs/ajtyl6e-financial-operations-lead" rel="noopener noreferrer" target="_blank">Open the source</a>
+</div>
+</article>
+<div class="float-col">
+<article class="fcard link-left" data-kind="hypothesis">
+<span class="mk mk-hyp">Hypothesis</span>
+<p data-bind="hypShort">The timing may suit a conversation about approvals, AP and connected accounting, while the stack is still being chosen.</p>
+</article>
+<article class="fcard" data-kind="unknown">
+<span class="mk mk-unk">Still unknown</span>
+<ul id="unkList"></ul>
+</article>
+</div>
+</div>
+</div>
+<form aria-labelledby="intake-h" class="addform intake" hidden="" id="intake" novalidate="">
+<div class="full">
+<h3 class="h3" id="intake-h">Add a public signal</h3>
+<p class="small">Enter what one public page says. The brief and the role-only draft are built from these fields with a fixed template: nothing is fetched from the link, scored or sent, and no names or contact details belong here.</p>
+</div>
+<label class="field"><span>Company</span><input aria-describedby="iCompany-err" autocomplete="off" id="iCompany" maxlength="80" type="text"/><span class="err" id="iCompany-err"></span></label>
+<label class="field"><span>What the source is (optional)</span><input aria-describedby="iTitle-err" autocomplete="off" id="iTitle" maxlength="100" placeholder="For example, company-posted job: Finance Manager" type="text"/><span class="err" id="iTitle-err"></span></label>
+<label class="field"><span>Public HTTPS source</span><input aria-describedby="iUrl-err" autocomplete="off" id="iUrl" inputmode="url" maxlength="500" placeholder="https://" spellcheck="false" type="text"/><span class="err" id="iUrl-err"></span></label>
+<label class="field"><span>Checked on (YYYY-MM-DD)</span><input aria-describedby="iChecked-err" autocomplete="off" id="iChecked" maxlength="10" type="text"/><span class="err" id="iChecked-err"></span></label>
+<label class="field full"><span>Observed facts, one per line, as the source states them</span><textarea aria-describedby="iFacts-err" class="plain" id="iFacts" rows="5"></textarea><span class="err" id="iFacts-err"></span></label>
+<label class="field full"><span>Hypothesis: your reading of the source, not a fact</span><textarea aria-describedby="iHyp-err" class="plain" id="iHyp" maxlength="400" rows="3"></textarea><span class="err" id="iHyp-err"></span></label>
+<label class="field full"><span>Unknowns, one per line (optional)</span><textarea aria-describedby="iUnk-err" class="plain" id="iUnk" rows="3"></textarea><span class="err" id="iUnk-err"></span></label>
+<div class="full acts">
+<button class="btn btn-ink btn-sm" id="intakeSubmit" type="submit">Build the brief from these fields</button>
+<button class="btn btn-sm" id="intakeCancel" type="button">Cancel</button>
+<span aria-live="polite" class="small" id="intakeMsg"></span>
+</div>
+</form>
+</div>
+</section>
+<!-- ================= 2 BRIEF ================= -->
+<section aria-labelledby="brief-h" class="brief-sec" data-section="" id="brief">
+<div class="wrap">
+<div class="sec-head">
+<div>
+<span aria-hidden="true" class="step-no">2</span>
+<h2 class="h2" id="brief-h">A brief with the evidence attached.</h2>
+</div>
+<p class="body">Evidence first, then the hypothesis, the questions worth asking and what Ramp UK can honestly offer. The sample draft unlocks for copy or export only after review. There is no send button.</p>
+</div>
+</div>
+<div class="art band dots" data-art="">
+<img alt="Route requests to the right approver." loading="lazy" src="art-1.jpg"/>
+<div class="art-cap band-cap"><span>Approvals in Ramp UK, product art from ramp.com/en-gb/expense-management</span></div>
+</div>
+<div class="wrap">
+<div class="brief-grid">
+<article aria-labelledby="acct-h" class="panel">
+<div class="panel-head">
+<div>
+<span class="small">Account brief</span>
+<h3 class="h3" id="acct-h" style="margin-top:4px">Solve Intelligence</h3>
+<div class="chips">
+<span id="chipDyn" style="display:contents"></span>
+<span class="pill" data-bind="crmPill3">CRM check needed</span>
+</div>
+</div>
+<fieldset class="lens" data-lens-group="" style="max-width:440px">
+<legend>Show</legend>
+<label><input checked="" name="lens2" type="radio" value="all"/>Everything</label>
+<label><input name="lens2" type="radio" value="observed"/><span class="mk mk-obs">Observed</span></label>
+<label><input name="lens2" type="radio" value="hypothesis"/><span class="mk mk-hyp">Hypothesis</span></label>
+<label><input name="lens2" type="radio" value="unknown"/><span class="mk mk-unk">Unknown</span></label>
+</fieldset>
+</div>
+<div aria-label="Brief sections" class="tabs" role="tablist">
+<button aria-controls="p-ev" aria-selected="true" class="tab" id="t-ev" role="tab" type="button">Evidence</button>
+<button aria-controls="p-why" aria-selected="false" class="tab" id="t-why" role="tab" tabindex="-1" type="button">Why now</button>
+<button aria-controls="p-qs" aria-selected="false" class="tab" id="t-qs" role="tab" tabindex="-1" type="button">Questions</button>
+<button aria-controls="p-fit" aria-selected="false" class="tab" id="t-fit" role="tab" tabindex="-1" type="button">UK fit</button>
+<button aria-controls="p-draft" aria-selected="false" class="tab" id="t-draft" role="tab" tabindex="-1" type="button">Sample draft</button>
+</div>
+<!-- Evidence -->
+<div aria-labelledby="t-ev" class="tabpanel" id="p-ev" role="tabpanel" tabindex="0">
+<p class="intro" data-bind="evIntro">Everything below comes from one company-posted page, paraphrased. Nothing here is from a conversation.</p>
+<ul class="ev" id="evList"></ul>
+</div>
+<!-- Why now -->
+<div aria-labelledby="t-why" class="tabpanel" hidden="" id="p-why" role="tabpanel" tabindex="0">
+<div class="hyp" data-kind="hypothesis">
+<span class="mk mk-hyp">Hypothesis, not confirmed</span>
+<p data-bind="hypothesis"></p>
+</div>
+<div class="two">
+<div data-kind="observed">
+<h4>What it rests on</h4>
+<ul id="restsList"></ul>
+</div>
+<div data-kind="unknown">
+<h4>What would make it wrong</h4>
+<ul id="wrongList"></ul>
+</div>
+</div>
+</div>
+<!-- Questions -->
+<div aria-labelledby="t-qs" class="tabpanel" hidden="" id="p-qs" role="tabpanel" tabindex="0">
+<p class="intro">Discovery questions for a first call. Tick up to three to include in the sample draft.</p>
+<ol class="qs" id="qs"></ol>
+</div>
+<!-- UK fit -->
+<div aria-labelledby="t-fit" class="tabpanel" hidden="" id="p-fit" role="tabpanel" tabindex="0">
+<div class="fit">
+<div>
+<h4>What Ramp UK supports today</h4>
+<ul id="fitList"></ul>
+</div>
+<div class="careful">
+<h4>Say it carefully</h4>
+<ul id="carefulList"></ul>
+</div>
+</div>
+</div>
+<!-- Draft -->
+<div aria-labelledby="t-draft" class="tabpanel" hidden="" id="p-draft" role="tabpanel" tabindex="0">
+<div class="sample-note">Sample Ramp-team outreach, written inside this hypothetical tool. It is addressed by role only and isn’t sent from anywhere.</div>
+<div class="draft-bar">
+<fieldset class="role">
+<legend>Written for</legend>
+<label><input checked="" name="role" type="radio" value="founder"/>Founder</label>
+<label><input name="role" type="radio" value="finance"/><span data-bind="roleFinance">Finance lead, once in seat</span></label>
+</fieldset>
+<button class="btn btn-sm" id="regen" type="button">Rebuild from brief</button>
+</div>
+<label class="sr" for="draft">Sample draft</label>
+<textarea class="code" id="draft" spellcheck="true"></textarea>
+<div class="draft-foot">
+<span class="small" id="draftState">Built from the brief. Edit freely.</span>
+<span class="small" id="wc"></span>
+</div>
+<h4 style="margin-top:22px">Illustrative keyword checks</h4>
+<p class="small" style="margin:4px 0 0;max-width:46em">These look for a few risky phrases as you type. Passing them doesn’t make the draft accurate or compliant; a person still reads every line against the UK pages.</p>
+<ul aria-live="polite" class="checks" id="checks"></ul>
+</div>
+</article>
+<aside aria-label="Review" class="rail">
+<section aria-labelledby="rev-h" class="panel review" id="review">
+<h3 id="rev-h">Human review</h3>
+<p class="small" style="margin:6px 0 0">Copy and export unlock when every box is ticked.</p>
+<div aria-hidden="true" class="meter"><i id="meter" style="width: 0%;"></i></div>
+<ul>
+<li><label><input class="box" data-rev="crm" disabled="" id="rev-crm" type="checkbox"/><span>Customer status checked in CRM and recorded above <span class="small" id="crmHint" style="display:block">Record it in Next action first</span></span></label></li>
+<li><label><input class="box" data-rev="facts" type="checkbox"/><span>Observed facts still match the source today</span></label></li>
+<li><label><input class="box" data-rev="claims" type="checkbox"/><span>Every product claim matches a linked UK page</span></label></li>
+<li><label><input class="box" data-rev="pii" type="checkbox"/><span>The draft names no one and holds no contact details</span></label></li>
+<li><label><input class="box" data-rev="nosend" type="checkbox"/><span>I’ll send it myself, if at all, outside this desk</span></label></li>
+</ul>
+<div class="acts">
+<button class="btn btn-ink" disabled="" id="copyBtn" type="button">Copy draft</button>
+<button class="btn" disabled="" id="exportBtn" type="button">Export brief</button>
+</div>
+<p aria-live="polite" class="stopnote" id="stopnote">0 of 5 checks done.</p>
+</section>
+<div class="panel nosend">
+<svg aria-hidden="true" height="18" viewBox="0 0 18 18" width="18"><circle cx="9" cy="9" fill="none" r="8" stroke="#1a1a1a" stroke-width="1.3"></circle><path d="M4 14 14 4" stroke="#1a1a1a" stroke-width="1.3"></path></svg>
+<span>No CRM is connected and nothing sends from this desk.</span>
+</div>
+</aside>
+</div>
+</div>
+</section>
+<!-- ================= 3 FEEDBACK ================= -->
+<section aria-labelledby="fb-h" class="sec" data-section="" id="feedback">
+<div class="wrap">
+<div class="sec-head">
+<div>
+<span aria-hidden="true" class="step-no">3</span>
+<h2 class="h2" id="fb-h">Feedback: what the field should teach product.</h2>
+</div>
+<p class="body">Structured questions for product, positioning and targeting, each with an owner and a decision. The seeded items are illustrative samples, not real conversations, and nobody has measured how often each comes up.</p>
+</div>
+<div class="fb-tools">
+<div class="left">
+<label class="field"><span>Owner</span>
+<select id="fbOwner"><option value="all">All owners</option></select>
+</label>
+<label class="field"><span>Question for</span>
+<select id="fbFor"><option value="all">Everything</option></select>
+</label>
+</div>
+<div style="display:flex;gap:10px;flex-wrap:wrap">
+<button class="btn btn-sm" id="logUnknown" type="button">Log an unknown from this brief</button>
+<button class="btn btn-sm" id="fbExport" type="button">Export shown items (CSV)</button>
+<button aria-controls="addform" aria-expanded="false" class="btn btn-solar btn-sm" id="addToggle" type="button">Add an item</button>
+</div>
+</div>
+<form class="addform" hidden="" id="addform" novalidate="">
+<label class="field"><span>Theme</span><input id="fTheme" maxlength="80" placeholder="For example, approval routing" required="" type="text"/></label>
+<label class="field"><span>Question for</span><select id="fFor"></select></label>
+<label class="field full"><span>The question</span><textarea class="plain" id="fQ" maxlength="280" placeholder="Write it as a question someone can answer" required=""></textarea></label>
+<label class="field"><span>Owner (role)</span><select id="fOwner"></select></label>
+<label class="field"><span>Decision so far</span><select id="fDisp"></select></label>
+<div class="full acts">
+<button class="btn btn-ink btn-sm" type="submit">Add item</button>
+<button class="btn btn-sm" id="addCancel" type="button">Cancel</button>
+<span aria-live="polite" class="small" id="formMsg">Saved in this browser only. Nothing is sent.</span>
+</div>
+</form>
+<div class="mosaic">
+<div class="fb-art">
+<div class="art dots" data-art="" id="fbArt">
+<img alt="Snap and done." loading="lazy" src="art-2.jpg"/>
+<div class="art-cap"><span>Product art from ramp.com/en-gb</span></div>
+</div>
+</div>
+<div aria-live="polite" class="fb-cards" id="fbCards"></div>
+</div>
+</div>
+</section>
+</main>
+<footer class="foot">
+<div class="wrap foot-grid">
+<div>
+<h2>Sources, checked 27 Oct 2026</h2>
+<ol>
+<li><a href="https://www.ycombinator.com/companies/solve-intelligence/jobs/ajtyl6e-financial-operations-lead" rel="noopener noreferrer" target="_blank">Solve Intelligence, Financial Operations Lead, company-posted on ycombinator.com</a></li>
+<li><a href="https://ramp.com/blog/uk-launch" rel="noopener noreferrer" target="_blank">Ramp, “Crossing the pond: Ramp is now live in the UK”, 15 Sep 2026</a></li>
+<li><a href="https://ramp.com/en-gb/corporate-cards" rel="noopener noreferrer" target="_blank">Ramp UK, corporate cards</a></li>
+<li><a href="https://ramp.com/en-gb/pricing" rel="noopener noreferrer" target="_blank">Ramp UK, pricing and plans</a></li>
+</ol>
+</div>
+<div class="notes">
+<h2>How to read this desk</h2>
+<p>Observed means it appears in a linked source. Hypothesis means it’s our reading of that source. Unknown means nobody here has checked it yet.</p>
+<p>Who it’s for: someone planning UK go-to-market work from public signals, checking a company before any outreach. It doesn’t fetch pages, use AI, connect to a CRM or send anything. Keyword checks catch a few risky phrases; they aren’t a compliance review.</p>
+<p>Feedback items and the outreach draft are samples. Product art and the logo come from ramp.com and are shown in this independent demonstration.</p>
+<h2 style="margin-top:28px">Saved on this device</h2>
+<p id="storeNote">Records, drafts, review checks and feedback are saved in this browser’s local storage on this device. Nothing is uploaded, and there’s no account.</p>
+<div class="data-acts">
+<button class="btn btn-sm" id="backupBtn" type="button">Download backup (JSON)</button>
+<button class="btn btn-sm" id="importBtn" type="button">Import backup</button>
+<button class="btn btn-sm" id="clearBtn" type="button">Clear desk data</button>
+<input accept=".json,application/json" aria-hidden="true" class="sr" id="importFile" tabindex="-1" type="file"/>
+</div>
+<div aria-live="polite" class="data-msg" id="dataMsg"></div>
+</div>
+</div>
+<div class="wrap"><p class="signoff">Independent concept by Ayo Ahmed</p></div>
+</footer>
+</div>
+<div aria-live="polite" class="toast" id="toast" role="status"></div>
+<noscript><p style="text-align:center;padding:16px">The desk needs JavaScript for drafting, review and saving.</p></noscript>
+<script src="desk-core.js"></script>
+<script src="desk-ui.js"></script>
+</body></html>
